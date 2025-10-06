@@ -261,3 +261,16 @@ class ESPNClient:
         except Exception as e:
             logger.error(f"Error getting team info: {str(e)}")
             return None
+
+    def get_player_id_by_name(self, name: str) -> Optional[int]:
+        """Get player ID by name."""
+        try:
+            logger.info(f"Fetching player ID for name: {name}")
+            player = self.league.player_info(name=name)
+            if not player:
+                logger.warning(f"No player found for name: {name}")
+                return None
+            return player.playerId
+        except Exception as e:
+            logger.error(f"Error getting player ID: {str(e)}")
+            return None

@@ -1,26 +1,74 @@
 import os
 import discord
 from discord.ext import commands
-import httpx
+# import httpx
 from dotenv import load_dotenv
-from discord_py_interactions import SlashCommand
+from espn_client import ESPNClient
+
+
+# from discord_py_interactions import SlashCommand
+import logging
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
 load_dotenv()
 
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+client = ESPNClient()
+
+
 intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-slash = SlashCommand(bot, sync_commands=True)
 
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user}')
 
-@slash.slash(name="get_data", description="Fetch data from FastAPI")
-async def get_data(ctx):
-    async with httpx.AsyncClient() as client:
-        response = await client.get('http://localhost:8000/')
-        data = response.json()
-        await ctx.send(f"Data: {data}")
+@bot.event
+async def on_member_join(member):
+    print(f'{member} has joined the server')
+    
+@bot.event
+async def on_member_remove(member):
+    print(f'{member} has left the server')
 
-bot.run(TOKEN)
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if message.content.startswith('!hello'):
+        await message.channel.send('Hello!')
+    
+    if message.content.startswith('!playerStats'):
+        await bot.process_commands(message)
+    await bot.process_commands(message)
+
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hello {ctx.author.mention}!')
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send('Pong!')
+
+@bot.command()
+async def playerStats(ctx, player_name):
+    await ctx.send(f'Player Stats for {player_name}!')
+    player_id = client.get_player_id_by_name(player_name)
+    if player_id:
+        await ctx.send(f'Player ID: {player_id}')
+    else:
+        await ctx.send(f'Player not found!')
+    player_stats = client.get_player_info(player_ids=[player_id])
+    if player_stats:
+        await ctx.send(f'Player Stats: {player_stats}')
+    else:
+        await ctx.send(f'Player stats not found!')
+
+    
+
+def run_bot():
+    bot.run(token=TOKEN, log_handler=handler, log_level=logging.DEBUG)
+

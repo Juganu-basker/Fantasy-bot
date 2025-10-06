@@ -4,3 +4,5 @@ node_modules/
 .env.local
 .vercel
 _pycache_
+discord.log
+.venv/
