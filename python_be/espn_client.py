@@ -24,8 +24,8 @@ class ESPNClient:
             logger.info("Initializing ESPNClient")
             self.league_id = int(os.getenv("LEAGUE_ID", 9490871))
             self.season = int(os.getenv("SEASON", 2026))
-            self.swid = os.getenv("SWID", "{7AF162F7-20D2-4158-A314-9967A442227B}")
-            self.espn_s2 = os.getenv("ESPN_S2", "AEAB07jbWUzo7x%2BY7FfULVtdVyimJomXDl6Zs65DYUBwVbPVg7BqvY7yUrZncqJrl3Ssx%2BQsDor6sRx1Wr2mS%2FrkhBHfXAQy2bWMEe9R76i3HcXenpGUN%2FxdTl2KGvSM%2B%2B7F0C008d0JTFXd2VwqVErrX15jO4UOagLO3DDEsNmRgEdY1AlkxYELWELWELPyPZHonrF2aP5H4KHt%2BfBQe%2BzKAcoHf%2FE5CYZJSIrKWLJpZeF7bqqOvIsSBFl0%2FuEPavC7EVmoB1HbZjztR7Fld%2B8%2BMZw")
+            self.swid = os.getenv("SWID", "")
+            self.espn_s2 = os.getenv("ESPN_S2", "")
 
             try:
                 logger.info(f"Connecting to ESPN Fantasy League {self.league_id} for season {self.season}")
