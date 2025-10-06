@@ -1,0 +1,3 @@
+[submodule "discord_bot"]
+	path = discord_bot
+	url = git@github.com:Juganu-basker/Discord-fantasy-bot.git
