@@ -21,7 +21,15 @@ app.include_router(router)
 
 @app.get("/")
 async def root():
+    logger.info("Root endpoint hit")
+    logger.debug("Root endpoint hit")
+    logger.warning("Root endpoint hit")
+    logger.error("Root endpoint hit")
+    logger.critical("Root endpoint hit")
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_bot())
     return {"message": "Fantasy Basketball API is running"}
+    
 
 @app.on_event("startup")
 async def startup_event():
