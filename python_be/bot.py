@@ -8,7 +8,6 @@ from espn_client import ESPNClient
 
 # from discord_py_interactions import SlashCommand
 import logging
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
 load_dotenv()
 
@@ -70,5 +69,5 @@ async def playerStats(ctx, player_name):
     
 
 def run_bot():
-    bot.run(token=TOKEN, log_handler=handler, log_level=logging.DEBUG)
+    bot.run(token=TOKEN, log_level=logging.DEBUG)
 
