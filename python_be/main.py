@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import router
 from bot import run_bot
 import asyncio
+import logging
 
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Fantasy Basketball API")
 
 # Configure CORS
@@ -23,6 +25,7 @@ async def root():
 
 @app.on_event("startup")
 async def startup_event():
+    logger.info("Starting up the bot")
     loop = asyncio.get_event_loop()
     loop.create_task(run_bot())
 
