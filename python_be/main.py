@@ -1,10 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import router
-import uvicorn
-import threading
-from bot import run_bot  # Import the function to start the bot
-
+from bot import run_bot
+import asyncio
 
 app = FastAPI(title="Fantasy Basketball API")
 
@@ -23,13 +21,12 @@ app.include_router(router)
 async def root():
     return {"message": "Fantasy Basketball API is running"}
 
-def start_bot():
-    run_bot()
+@app.on_event("startup")
+async def startup_event():
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_bot())
 
 if __name__ == "__main__":
-    # Start the Discord bot in a separate thread
-    bot_thread = threading.Thread(target=start_bot)
-    bot_thread.start()
-
     # Start the FastAPI server
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
