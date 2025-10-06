@@ -1,15 +1,15 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "python_be/main.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "python_be/main.py"
-      }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "python_be/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "python_be/main:app"
+    }
+  ]
+}
