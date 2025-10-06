@@ -6,7 +6,7 @@ from logger_config import setup_logger
 from fastapi import HTTPException
 
 # Set up logger
-logger = setup_logger('espn_client', 'espn_client.log')
+logger = setup_logger('espn_client')
 
 load_dotenv()
 
