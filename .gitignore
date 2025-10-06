@@ -5,4 +5,6 @@ node_modules/
 .vercel
 _pycache_
 discord.log
-.venv/
+.venv/__pycache__/
+*.py[cod]
+*.class
