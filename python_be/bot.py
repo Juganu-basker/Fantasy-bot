@@ -69,5 +69,15 @@ async def playerStats(ctx, player_name):
     
 
 def run_bot():
+    # Configure logging to output to console
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger('discord')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+
     bot.run(token=TOKEN, log_level=logging.DEBUG)
 
